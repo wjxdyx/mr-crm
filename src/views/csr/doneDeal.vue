@@ -115,7 +115,6 @@ onMounted(() => {
         />
       </div>
     </page-main>
-    {{ pageInfo.csrView }}
     <CsrDrawer v-model:visible="pageInfo.csrView.drawer" :row-data="pageInfo.csrView.rowData" />
   </div>
 </template>

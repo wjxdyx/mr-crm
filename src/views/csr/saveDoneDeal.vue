@@ -1,7 +1,7 @@
 /* stylelint-disable stylistic/selector-combinator-space-before */
 <script lang="ts" setup name="Csr">
 import { CirclePlus, Delete, UploadFilled } from '@element-plus/icons-vue'
-import type { UploadFile, UploadInstance, UploadProps, UploadRawFile } from 'element-plus'
+import type { UploadFile, UploadProps, UploadRawFile, UploadUserFile } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import CsrTimeLine from './components/csrTimeline.vue'
 import apiCsr from '@/api/modules/csr'
@@ -78,19 +78,20 @@ const handleDocRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
   docFileForm.value = undefined
 }
 // 聊天记录
-const uploadRef = ref<UploadInstance>()
+const uploadRef = ref<UploadUserFile>()
 const upFileDialog = ref({
   msgPreview: '',
   visible: false,
 })
 // 聊天记录上传存放数据
-const fileForm = ref<UploadRawFile[]>([])
-// 文件上传操作
-function fileChange(file: UploadFile) {
-  if (file.raw) {
-    fileForm.value.push(file.raw)
-  }
+const fileForm = ref<UploadFile[]>([])
+// 文件change操作
+
+const fileChange: UploadProps['onChange'] = (uploadFile, uploadFiles) => {
+  // fileForm.value = fileForm.value.slice(-3)
+  console.log(uploadFile, uploadFiles)
 }
+
 // 删除文件
 const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
   console.log(uploadFile, uploadFiles)
@@ -126,13 +127,17 @@ async function clickSave() {
       formData.append(`pro[${index}][amt]`, ele.amt.toString())
       formData.append(`pro[${index}][mark]`, ele.mark)
     })
-    fileForm.value.forEach((ele: UploadRawFile, index: number) => {
-      formData.append(`msg_log[${index}]`, ele)
+    fileForm.value.forEach((ele: UploadFile, index: number) => {
+      console.log(ele)
+
+      formData.append(`msg_log[${index}]`, ele.raw as UploadRawFile)
     })
     if (docFileForm.value) {
       formData.append('doc_file', docFileForm.value)
+      console.log(docFileForm.value)
     }
-    console.log(formData.get('doc_file'))
+    // console.log(formData.get('doc_file'))
+    console.log(formData)
     await apiCsr.saveDeal(formData)
 
     ElMessage({
