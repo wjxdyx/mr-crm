@@ -22,6 +22,7 @@ const saveForm = ref<csrSave>({
   code: '',
   phone: '',
   mark: '',
+  ws_step: undefined,
   amt: undefined,
   pro: [],
   contract: [],
@@ -58,7 +59,7 @@ async function clickSave() {
     saveBtnState.value = true
     console.log(saveForm.value)
 
-    // await apiCsr.saveEnquiry(saveForm.value)
+    await apiCsr.saveEnquiry(saveForm.value)
 
     ElMessage({
       message: '添加成功',
@@ -83,7 +84,10 @@ onMounted(() => {
     <page-main class="filter-header">
       <template #title>
         <span>保存销售线索 </span>
-
+        <el-input v-model="saveForm.ws_step" placeholder="回访时间不填默认7天" style="margin-left: auto;
+    display: inline-block;
+    width: 200px;"
+        />
         <el-button type="primary" :loading="saveBtnState" @click="clickSave">
           保存
         </el-button>

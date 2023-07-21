@@ -5,22 +5,24 @@ function Layout() {
 }
 
 const routes: RouteRecordRaw = {
-  path: '/doc',
+  path: '/ai',
   component: Layout,
-  redirect: '/doc/index',
-  name: 'doc',
+  redirect: '/ai/openai',
+  name: 'ai',
   meta: {
-    title: '文件',
+    title: 'AI',
     icon: 'sidebar-breadcrumb',
+
   },
   children: [
 
     {
-      path: 'index2',
-      name: 'docIndex2',
-      component: () => import('@/views/doc/index2.vue'),
+      path: 'openai',
+      name: 'aiOpenai',
+      component: () => import('@/views/ai/openai.vue'),
       meta: {
-        title: '文件资料',
+        title: 'openai',
+        sidebar: false,
       },
     },
 

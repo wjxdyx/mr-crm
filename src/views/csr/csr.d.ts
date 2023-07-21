@@ -56,6 +56,7 @@ interface csrSave {
   name: string
 
   mark: string
+  ws_step: string | undefined
   crm_csr_id?: number | undefined
   from: string
   code: string

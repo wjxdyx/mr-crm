@@ -1,4 +1,3 @@
-/* stylelint-disable stylistic/selector-combinator-space-before */
 <script lang="ts" setup name="Csr">
 import { CirclePlus, Delete, UploadFilled } from '@element-plus/icons-vue'
 import type { UploadFile, UploadProps, UploadRawFile, UploadUserFile } from 'element-plus'
@@ -22,6 +21,7 @@ const saveForm = ref<csrSave>({
   crm_csr_id: undefined,
   name: '',
   from: '',
+  ws_step: undefined,
   code: '',
   phone: '',
   mark: '',
@@ -116,6 +116,9 @@ async function clickSave() {
     formData.append('from', saveForm.value.from)
     formData.append('name', saveForm.value.name)
     formData.append('phone', saveForm.value.phone)
+    if (saveForm.value.ws_step !== undefined) {
+      formData.append('step', saveForm.value.ws_step as string)
+    }
     formData.append('mark', saveForm.value.mark as string)
     if (saveForm.value.amt) {
       formData.append('amt', saveForm.value.amt.toString())
@@ -139,7 +142,7 @@ async function clickSave() {
     // console.log(formData.get('doc_file'))
     console.log(formData)
     await apiCsr.saveDeal(formData)
-
+    saveForm.value.ws_step = undefined
     ElMessage({
       message: '添加成功',
     })
@@ -165,6 +168,10 @@ onMounted(() => {
     <page-main class="filter-header" style="height: 100%;">
       <template #title>
         <span>保存成交客户 </span>
+        <el-input v-model="saveForm.ws_step" placeholder="回访时间不填默认7天" style="margin-left: auto;
+    display: inline-block;
+    width: 200px;"
+        />
         <el-button type="primary" :loading="saveBtnState" @click="clickSave">
           保存
         </el-button>

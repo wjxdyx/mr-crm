@@ -21,16 +21,7 @@ const routes: RouteRecordRaw = {
       component: () => import('@/views/user/index.vue'),
       meta: {
         title: '员工',
-        sidebar: true,
-      },
-    },
-    {
-      path: 'openai',
-      name: 'useropenai',
-      component: () => import('@/views/csr/openai.vue'),
-      meta: {
-        title: 'openai',
-        sidebar: true,
+
       },
     },
 

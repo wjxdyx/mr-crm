@@ -19,9 +19,10 @@ const useUserStore = defineStore(
     const isLogin = computed(() => {
       let retn = false
       if (token.value) {
-        if (new Date().getTime() < parseInt(failure_time.value) * 1000) {
-          retn = true
-        }
+        // if (new Date().getTime() < parseInt(failure_time.value) * 1000) {
+        //   retn = true
+        // }
+        retn = true
       }
       // console.log(retn, token.value, localStorage.token)
 
@@ -39,17 +40,16 @@ const useUserStore = defineStore(
       }
       // 通过 mock 进行登录
       const res = await apiUser.login(sData)
-      console.log(res, 'xxxx')
 
       localStorage.setItem('account', res.data.nickname)
       localStorage.setItem('token', res.token)
       localStorage.setItem('auth_group', res.data.auth_group)
 
-      localStorage.setItem('failure_time', res.data.failure_time)
+      // localStorage.setItem('failure_time', res.data.failure_time)
       account.value = res.data.account
       token.value = res.token
       auth_group.value = res.data.auth_group
-      failure_time.value = res.data.failure_time
+      // failure_time.value = res.data.failure_time
     }
     // 登出
     async function logout() {

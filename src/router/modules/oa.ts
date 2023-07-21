@@ -5,22 +5,24 @@ function Layout() {
 }
 
 const routes: RouteRecordRaw = {
-  path: '/doc',
+  path: '/oa',
   component: Layout,
-  redirect: '/doc/index',
-  name: 'doc',
+  redirect: '/oa/followUp',
+  name: 'oa',
   meta: {
-    title: '文件',
+    title: '审批',
     icon: 'sidebar-breadcrumb',
+
   },
   children: [
 
     {
-      path: 'index2',
-      name: 'docIndex2',
-      component: () => import('@/views/doc/index2.vue'),
+      path: 'followUp',
+      name: 'oaFollowUp',
+      component: () => import('@/views/oa/followUp.vue'),
       meta: {
-        title: '文件资料',
+        title: '回访审批',
+        sidebar: false,
       },
     },
 

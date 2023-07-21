@@ -12,6 +12,15 @@ const menu: Menu.recordMainRaw[] = [
       MultilevelMenuExample,
     ],
   },
+  {
+    meta: {
+      title: 'OpenAi',
+      icon: 'sidebar-default',
+    },
+    children: [
+      MultilevelMenuExample,
+    ],
+  },
 ]
 
 export default menu

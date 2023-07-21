@@ -108,6 +108,7 @@ onMounted(() => {
           <el-table-column prop="deal_amt" label="历史总成交金额" show-overflow-tooltip />
           <el-table-column prop="markBread" label="备注" width="200" />
           <el-table-column prop="username" label="负责人" width="140" />
+
           <el-table-column prop="create_time" label="创建时间" width="180" />
         </el-table>
         <el-pagination small background layout="prev, pager, next" :page-size="csrTablePage.limit"

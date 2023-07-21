@@ -4,7 +4,9 @@ import type { RouteRecordRaw } from 'vue-router'
 import HomeMenu from './modules/home.menu'
 import CsrMenu from './modules/csr.menu'
 import userMenu from './modules/user'
+import OpenAi from './modules/open.ai'
 import DocMenu from './modules/doc'
+import Oa from './modules/oa'
 import type { Route } from '#/global'
 import useSettingsStore from '@/store/modules/settings'
 
@@ -81,7 +83,7 @@ const systemRoutes: RouteRecordRaw[] = [
 const asyncRoutes: Route.recordMainRaw[] = [
   {
     meta: {
-      title: '演示',
+      title: 'CRM',
       icon: 'sidebar-default',
     },
     children: [
@@ -89,6 +91,17 @@ const asyncRoutes: Route.recordMainRaw[] = [
       CsrMenu,
       DocMenu,
       userMenu,
+      Oa,
+
+    ],
+  },
+  {
+    meta: {
+      title: 'OpenAi',
+      icon: 'sidebar-default',
+    },
+    children: [
+      OpenAi,
 
     ],
   },
@@ -102,6 +115,7 @@ const constantRoutesByFilesystem = generatedRoutes.filter((item) => {
 const asyncRoutesByFilesystem = setupLayouts(generatedRoutes.filter((item) => {
   return item.meta?.enabled !== false && item.meta?.constant !== true && item.meta?.layout !== false
 }))
+console.log(asyncRoutesByFilesystem)
 
 export {
   constantRoutes,
