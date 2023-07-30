@@ -16,7 +16,15 @@ const props = defineProps({
                       :timestamp="`创建时间:${item?.create_time},下次回访:${item?.next_follow_time}`"
                       :color="item?.tfrom === 'deal' ? '#ff604a' : '#65c2ff'" style="position: relative;;margin-left: 15px;"
     >
-      {{ item?.mark }}
+      <el-tag v-if="item.state === 1" type="success" class="mx-1" effect="dark">
+        审批：允许
+      </el-tag>
+      <el-tag v-if="item.state === -1" type="danger" class="mx-1" effect="dark">
+        审批：拒绝
+      </el-tag>
+      <el-tag v-if="item.state === 0" type="info" class="mx-1" effect="dark">
+        审批：待审批
+      </el-tag>
       <span v-if="item.tfrom === 'deal'" style="font-size: 18px;">
         来访已成交,成交金额：{{ item?.amt }}
       </span>
@@ -43,6 +51,7 @@ const props = defineProps({
       <div style="font-size: 10px;color: #5f5f5f;padding: 5px ;    margin-right: 40px;border-top: 1px dashed #bdbdbd;">
         产品: {{ item?.deal_pro_info }}
       </div>
+      {{ item?.mark }}
     </el-timeline-item>
   </el-timeline>
 </template>

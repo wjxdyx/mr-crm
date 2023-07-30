@@ -20,14 +20,22 @@ async function clickQuerySearch() {
 async function clickCsrTableRow(e: any) {
   console.log(e)
 }
-async function clickAllow(e: { crm_csr_track_id: any; state: number }) {
-  const { data } = await apiOa.allow(e.crm_csr_track_id, 1)
-  e.state = 1
+async function clickAllow(e: { crm_csr_track_id: any; state: number }, state: number) {
+  const { data } = await apiOa.allow(e.crm_csr_track_id, state)
+  e.state = state
 }
 const auth_group = ref('xxxx')
 auth_group.value = useUserStore().auth_group
 onMounted(() => {
   clickQuerySearch()
+})
+const timer = setInterval(() => {
+  // 定时器的操作逻辑
+  clickQuerySearch()
+}, 5000)
+onUnmounted(() => {
+  clearTimeout(timer)
+  console.log('Timer is destory!')
 })
 </script>
 
@@ -66,21 +74,30 @@ onMounted(() => {
           </el-table-column>
           <el-table-column prop="tfrom_from" label="来源" />
           <el-table-column prop="ws_index" label="第几次" />
-          <el-table-column prop="ws_step" label="通知间隔" />
-          <el-table-column prop="next_follow_time" label="下次通知" width="160" />
-          <el-table-column prop="state" label="状态" show-overflow-tooltip>
+          <el-table-column prop="ws_step" label="通知间隔">
             <template #default="scope">
               <span>
 
-                {{ scope.row.state === 1 ? '通过' : '驳回' }}
+                {{ scope.row.ws_step / 24 / 60 / 60 }}
               </span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="next_follow_time" label="下次通知" width="160" />
+          <el-table-column prop="state" label="状态" show-overflow-tooltip>
+            <template #default="scope">
+              <span v-show="scope.row.state === 1">通过</span>
+              <span v-show="scope.row.state === -1">驳回</span>
+              <span v-show="scope.row.state === 0">待审批</span>
             </template>
           </el-table-column>
           <el-table-column prop="create_time" label="操作" width="180">
             <template #default="scope">
               <div>
-                <el-button v-if="scope.row.state === 0" @click="clickAllow(scope.row)">
+                <el-button @click="clickAllow(scope.row, 1)">
                   允许
+                </el-button>
+                <el-button type="danger" @click="clickAllow(scope.row, -1)">
+                  驳回
                 </el-button>
               </div>
             </template>
@@ -159,7 +176,7 @@ onMounted(() => {
   padding-top: 30px;
 }
 
-.query-tobar > div + .query-tobar > div {
+.query-tobar>div+.query-tobar>div {
   margin-right: 10px;
 }
 

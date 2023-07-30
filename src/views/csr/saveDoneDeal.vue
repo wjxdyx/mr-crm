@@ -168,7 +168,7 @@ onMounted(() => {
     <page-main class="filter-header" style="height: 100%;">
       <template #title>
         <span>保存成交客户 </span>
-        <el-input v-model="saveForm.ws_step" placeholder="回访时间不填默认7天" style="margin-left: auto;
+        <el-input v-model="saveForm.ws_step" placeholder="回访时间不填默认15天" style="margin-left: auto;
     display: inline-block;
     width: 200px;"
         />

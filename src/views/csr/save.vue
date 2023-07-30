@@ -54,12 +54,24 @@ function handleSelect(item: Record<string, any>) {
   csrTrack()
 }
 const saveBtnState = ref(false)
+
 async function clickSave() {
   try {
     saveBtnState.value = true
     console.log(saveForm.value)
+    const formData = new FormData()
+    formData.append('from', saveForm.value.from)
+    formData.append('name', saveForm.value.name)
+    formData.append('phone', saveForm.value.phone)
+    if (saveForm.value.ws_step !== undefined) {
+      formData.append('step', saveForm.value.ws_step as string)
+    }
+    formData.append('mark', saveForm.value.mark as string)
+    if (saveForm.value.amt) {
+      formData.append('amt', saveForm.value.amt.toString())
+    }
 
-    await apiCsr.saveEnquiry(saveForm.value)
+    await apiCsr.saveEnquiry(formData)
 
     ElMessage({
       message: '添加成功',
@@ -84,7 +96,7 @@ onMounted(() => {
     <page-main class="filter-header">
       <template #title>
         <span>保存销售线索 </span>
-        <el-input v-model="saveForm.ws_step" placeholder="回访时间不填默认7天" style="margin-left: auto;
+        <el-input v-model="saveForm.ws_step" placeholder="回访时间不填默认15天" style="margin-left: auto;
     display: inline-block;
     width: 200px;"
         />
